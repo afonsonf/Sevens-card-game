@@ -188,8 +188,8 @@ play_card_aux(L,A,L2):-
     	 L=[Min,Max],A=Max,Max2 is Max+1,not(Max2<14),L2=[Min]).
 
 play:-playX(X1,X2,X3),playloop(X1,X2,X3,0).
-playloop(_,_,_,1):-!.
-playloop(X1,X2,X3,0):-play_round(X1,X2,X3,X12,X22,X32,K),playloop(X12,X22,X32,K).
+playloop(_,P,_,1):-show_ranking(P),!.
+playloop(X1,X2,X3,0):-play_round(X1,X2,X3,X12,X22,X32,K,_),playloop(X12,X22,X32,K).
 
 %inicializa um jogo, caso numero variavel de jogadores retirar % da 3 e 4 linha do play
 playX(T,Players,FirstNj):-
@@ -231,7 +231,7 @@ burryFinalCard(Card,Board,Players,NJ,Board,Players2,NJ2):-
 play_round(Board,Players,NJ,Board,Players,NJ,1,_):-end(Players),!.
 
 %Human a jogar se N=1
-play_round(Board,Players,0,New_board,Players2,NJ2,0,_):-
+play_round(Board,Players,1,New_board,Players2,NJ2,K,_):-
     nb_getval(npl,V),(2>V,NJ2=1,!;NJ2=2),
     getPlayer(Players,j(N,Hand,Burry,P),1),
     writeSeparator,
@@ -256,7 +256,7 @@ play_round(Board,Players,0,New_board,Players2,NJ2,0,_):-
     	 delete(Hand, Card, New_hand),!,update_stats(Board,1),
     	 New_board=Board % Sem mudança, envia o mesmo board
     	),
-    updateJ(Players,j(N,New_hand,New_Burry,P2),Players2),!.	%faz update a lista de players
+    updateJ(Players,j(N,New_hand,New_Burry,P2),Players2),!,(end(Players2),K=1,!;K=0).	%faz update a lista de players
 
 %Bot 2 e 3 se N=2 ou 3
 play_round(Board,Players,NJ,New_board,Players2,NJ2,K,Cardf):-NJ<4,!,
