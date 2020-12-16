@@ -3,7 +3,7 @@ Sevens card game written in prolog with IA and a java swing UI (created with @ro
 
 Requirements:
 ------------------------------------------------------------------
-. java version 9: "sudo apt-get install oracle-java9-installer" <br />
+. java version 8: "sudo apt-get install openjdk-8-jdk" <br />
 . swipl: "sudo apt-get install swi-prolog"<br />
 . jpl: "sudo apt-get install swi-prolog-java"<br />
 (to remove previous versions of java: "sudo apt-get remove java*")
